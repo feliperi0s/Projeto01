@@ -1,0 +1,54 @@
+@charset "UTF-8";
+body {
+    background-color: #FAEBE0;
+}
+
+#tudo {
+    width: 95%;
+    min-height:620px;
+    margin: auto;
+    background-color: #C9E4C5;
+}
+
+#cabecario {
+    text-align: center;
+    font-size: 1.5em;
+    color: #C1AC95;
+    padding-top: 10px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#adicionarIten {
+    margin: auto;
+    text-align: center;
+    width: 85%;
+    height: 100px;
+    background-color: #B5CDA3;
+}
+#adicionar {
+    margin-top: 37px;
+    width: 50%;
+    height: 30px;
+}
+
+#itensAdicionados {
+    margin: 10px auto;
+    width: 85%;
+    min-height: 350px;
+    display: flex;
+    align-content:space-between ;
+}
+ #lista {
+    background-color: #B5CDA3;
+    width: 50%;
+    text-align: center;
+    
+}
+
+#soma {
+    text-align: center;
+    margin-left: 20%;
+    width: 20%;
+    background-color: #B5CDA3;
+    height: 150px;
+} 

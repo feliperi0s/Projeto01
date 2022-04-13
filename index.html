@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,36 +8,47 @@
     <title>Lista de Compras</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div id="tudo">
         <header id="cabecario">
-        <h1>
-            Lista de Compras
-        </h1>
+            <h1>
+                Lista de Compras
+            </h1>
         </header>
 
         <section id="adicionarIten">
-        <div>
-        <input type="text" name="" id="adicionar">
-        <button onclick="adicionarNaLista()">Adicionar</button>
-        </div>
+            <div>
+                <input type="text" name="" id="adicionar">
+                <button onclick="adicionarNaLista()" id="botao">Adicionar</button>
+            </div>
         </section>
 
         <section id="itensAdicionados">
-        <div id="lista">
-        <ul id="listagem">
+            <div id="lista">
+                <ul id="listagem">
 
-        </ul>
-        </div>
-        <div id="soma">
-        SOMA
-        </div>
+                </ul>
+
+            </div>
+            <div id="soma">
+                SOMA
+            </div>
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <input type="number" name="" id="">
+                    <button>Enviar!</button>
+                </div>
+
+            </div>
         </section>
 
         <footer>
-            
+
         </footer>
     </div>
     <script src="func.js"></script>
 </body>
+
 </html>

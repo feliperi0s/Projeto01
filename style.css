@@ -120,10 +120,15 @@ body {
 }
 
 .listaContent {
+    margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
 }
 #listagem {
     margin: 0;
     padding: 10px;
+    
+}
+.box {
+   margin-top: 10px;
 }

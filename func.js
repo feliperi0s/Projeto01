@@ -4,7 +4,8 @@
  * @param {any} id
  * @returns {any}
  */
-function removerItemDaLista(id) {
+ function removerItemDaLista(id) {
+
   const allValue = localStorage.getItem("itensDaLista") // retirando o valor do localstorage 
   const arrayList = allValue.split(",") //transformando em array com o split
 
@@ -18,7 +19,6 @@ function removerItemDaLista(id) {
     //o filtro devolve o array no caso o localstorage sem o intem do id-button
   }
   localStorage.setItem("itensDaLista", itemfiltrado.toString()) //por ultimo devolvemos o array já filtrado sem o item excluido
-  console.log(itemfiltrado)
 }
 
 /**
@@ -32,10 +32,10 @@ function atualizarLista() {
     const arrayList = allValue.split(",") // c
 
     document.getElementById("listagem").innerHTML = arrayList.map((item, index) => (
-      `<li id="${index + 1}">
-      <span>${item}</span>
+      `<li id="${index + 1}" class="listaContent">
       <input type="checkbox" id="${index + 1}">
-      <button onclick="removerItemDaLista(${index + 1})" class="remover">x</button>
+      <span>${item}</span>
+      <button onclick="removerItemDaLista(${index + 1})" class="remover"><img src="lixeira.png" alt="" id="lixeira"></button>
       </li>` // Criando o item da lista , checkbox e o button para remover
     )).toString().replaceAll(",", "") // toString para transformar em String e replaceAll para retirar a virgula e trocar pelo espaço .
 
@@ -82,7 +82,7 @@ function adicionarNaLista() {
 }
 
 function gerarJanela() {
-  let janela = document.getElementById("myModal");
+  let janela = document.getElementById("janela");
 
   let botao = document.getElementById("myBtn");
 
@@ -110,7 +110,7 @@ if (allValue != null) {
 arrayList.map((item, index) => {
   const inputCheckbox = document.getElementById(index+1).addEventListener("change", (event) => {
     if (event.target.checked) {
-      let janela = document.getElementById("myModal");
+      let janela = document.getElementById("janela");
       janela.style.display = "block";
       let fechar = document.getElementsByClassName("close")[0];
       fechar.onclick = () => {
@@ -125,9 +125,3 @@ arrayList.map((item, index) => {
 }
 
 gerarEventoInput()
-
-
-
-
-
-

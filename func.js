@@ -33,7 +33,7 @@ function atualizarLista() {
 
     document.getElementById("listagem").innerHTML = arrayList.map((item, index) => (
       `<li id="${index + 1}" class="listaContent">
-      <input type="checkbox" id="${index + 1}">
+      <input type="checkbox" id="${index + 1}" class="box">
       <span>${item}</span>
       <button onclick="removerItemDaLista(${index + 1})" class="remover"><img src="lixeira.png" alt="" id="lixeira"></button>
       </li>` // Criando o item da lista , checkbox e o button para remover

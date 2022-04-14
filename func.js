@@ -120,7 +120,6 @@ arrayList.map((item, index) => {
         event.target.checked=false
       }
     }
-    console.log(event.target.checked)
   })
 })
 }
@@ -131,11 +130,9 @@ let nomeProd = ""
 gerarEventoInput()
 
 async function obterDadosGit(){
-  console.log(nomeProd)
   const resp = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=dpPu1kIHwa3fxoQiH9lzTfmUkMgEjtuS&q=${nomeProd}`)
   const dados = await resp.json();
   let numerogit = Math.floor(Math.random() * 50) + 1;
    const src = dados.data[numerogit].images.fixed_width.url
    document.getElementById("image").innerHTML = `<img src="${src}" alt="" style="width: 200px; height: 200px;"></img>`
 }
-console.log(nomeProd)

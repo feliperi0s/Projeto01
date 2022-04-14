@@ -138,4 +138,3 @@ async function obterDadosGit(){
    const src = dados.data[numerogit].images.fixed_width.url
    document.getElementById("image").innerHTML = `<img src="${src}" alt="" style="width: 200px; height: 200px;"></img>`
 }
-console.log(nomeProd)

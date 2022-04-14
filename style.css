@@ -39,20 +39,20 @@ body {
     
 }
 
-#itensAdicionados {
-    border-radius: 10px;
-    margin: 10px auto;
-    width: 85%;
-    min-height: 350px;
+#itensVisiveis {
+    padding: 50px;
     display: flex;
+    justify-content: space-around;
+    min-height: 350px;
 }
+
  #lista {
     border-radius: 10px;
     background-color: #455559;
     width : 40%;
     margin-left: 19%;
     text-align: start;
-    font-size: 1.9rem;
+    font-size: 1.5em;
     color: white;
     text-shadow:rgba(0, 0, 0, 0.596) 1px -1px, rgba(0, 0, 0, 0.596) -1px 1px, rgba(0, 0, 0, 0.596) 1px 1px, rgba(0, 0, 0, 0.596) -1px -1px;
     
@@ -68,7 +68,9 @@ body {
     margin-right: 5%;
     width: 20%;
     background-color: #455559;
-    height: 100px;
+    height: 150px;
+    font-size: 1em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 } 
 
 .modal {
@@ -119,7 +121,7 @@ body {
 
 #lixeira {
     margin-bottom: -4px;
-    width: 25px;
+    width: 1.5em;
 }
 
 .listaContent {
@@ -145,6 +147,8 @@ body {
     padding: 10px;
     color: white;
 }
-#dasd {
-    width: 200px; height: 400px;
+
+#image{
+ display: flex;   
+ max-width: 30px;
 }

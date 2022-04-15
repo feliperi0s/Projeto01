@@ -1,3 +1,4 @@
+let nomeProd = ""
 /**
  * função para remover o item da lista HTML e do LocalStorage
  * @date 2022-04-12
@@ -7,18 +8,19 @@
  function removerItemDaLista(id) {
 
   const allValue = localStorage.getItem("itensDaLista") // retirando o valor do localstorage 
-  const arrayList = allValue.split(",") //transformando em array com o split
+  
+  const arrayList = JSON.parse(allValue).length > 1 ? [...JSON.parse(allValue)]: [JSON.parse(allValue)]
 
   const itemDeletado = document.getElementById(id);// id que vem do botão incluso no HTML
   itemDeletado.remove(); //utizando o romove para remover o item do id
 
-  const itemfiltrado = arrayList.filter((value) => arrayList[id - 1] != value) //filtro para pegar o valor do id e encontrar ele no localstorage
+  const itemfiltrado = arrayList.filter((value) => arrayList[id - 1].name != value.name) //filtro para pegar o valor do id e encontrar ele no localstorage
   if (itemfiltrado.length === 0) {
     localStorage.removeItem("itensDaLista")
     return
     //o filtro devolve o array no caso o localstorage sem o intem do id-button
   }
-  localStorage.setItem("itensDaLista", itemfiltrado.toString()) //por ultimo devolvemos o array já filtrado sem o item excluido
+  localStorage.setItem("itensDaLista", JSON.stringify(itemfiltrado)) //por ultimo devolvemos o array já filtrado sem o item excluido
 }
 
 /**
@@ -29,12 +31,12 @@
 function atualizarLista() {
   const allValue = localStorage.getItem("itensDaLista")
   if (allValue != null) { //pegamos os valores do localStorage se diferentes de null
-    const arrayList = allValue.split(",") // c
+    const arrayList = JSON.parse(allValue).length > 1 ? [...JSON.parse(allValue)]: [JSON.parse(allValue)]
 
     document.getElementById("listagem").innerHTML = arrayList.map((item, index) => (
       `<li id="${index + 1}" class="listaContent">
       <input type="checkbox" id="${index + 1}" class="box">
-      <span>${item}</span>
+      <span>${item.name}</span>
       <button onclick="removerItemDaLista(${index + 1})" class="remover"><img src="lixeira.png" alt="" id="lixeira"></button>
       </li>` // Criando o item da lista , checkbox e o button para remover
     )).toString().replaceAll(",", "") // toString para transformar em String e replaceAll para retirar a virgula e trocar pelo espaço .
@@ -53,30 +55,33 @@ function adicionarNaLista() {
   let valorDoInput = document.getElementById("adicionar").value // valor do digitado no input
   nomeProd = valorDoInput
   let itens = []; // array de itens vazio
-  let valorDoStorege = localStorage.getItem("itensDaLista") // ValorDoStorege é igual ao valor do LocalStage
+  let allValue = localStorage.getItem("itensDaLista") // ValorDoStorege é igual ao valor do LocalStage
   if (valorDoInput.trim() == "") { // utilizando .trim() para limpar os espaços em branco do valorDoInput
     alert("Digite o Item") // Alerta para digitar item valido
     return
   }
-  if (valorDoStorege != null) {
-    const arrayStorege = valorDoStorege.split(",") //transforma o valor do localstorage em array com o split
-    if (arrayStorege.includes(valorDoInput)) { //Se o valor do valorDoInput Já estiver no arrayStorege ele retorna item já está incluso utilizado o .includes para verificar
+  if (allValue != null) {
+    const arrayList = JSON.parse(allValue).length > 1 ? [...JSON.parse(allValue)]: [JSON.parse(allValue)]
+    if (arrayList.some((item) => item.name == valorDoInput)) { //Se o valor do valorDoInput Já estiver no arrayStorege ele retorna item já está incluso utilizado o .includes para verificar
       alert("Item já incluso")
       return
     }
-    const value = localStorage.getItem("itensDaLista") ?
-      `${valorDoInput},${localStorage.getItem("itensDaLista")}` :
-      valorDoInput // if ternario que verifica se já existe valor no localstorage se sim ele adiciona + o valor do input se não adiciona somento o valor do input
-    itens.push(value)
-    localStorage.setItem("itensDaLista", itens)
+    let value = [{name:valorDoInput,preco:0.00}]
+    if (JSON.parse(localStorage.getItem("itensDaLista")).length > 1) {
+      value = [{name:valorDoInput,preco:0.00},...JSON.parse(localStorage.getItem("itensDaLista"))]
+    }else {
+      value.push(JSON.parse(localStorage.getItem("itensDaLista")))
+      
+    }
+    localStorage.setItem("itensDaLista", JSON.stringify(value))
     document.getElementById("adicionar").value = "" // substitui o valor digitado no input quando apertado o botao
     atualizarLista()
     gerarEventoInput()
     obterDadosGit()
     return
   } else {
-    itens.push(valorDoInput)
-    localStorage.setItem("itensDaLista",itens)
+    itens.push(JSON.stringify({name:valorDoInput,preco:0.00}))
+    localStorage.setItem("itensDaLista",JSON.stringify({name:valorDoInput,preco:0.00}))
     document.getElementById("adicionar").value = ""
     atualizarLista()
     gerarEventoInput()
@@ -108,7 +113,7 @@ function gerarJanela() {
 function gerarEventoInput() {
   const allValue = localStorage.getItem("itensDaLista") // retirando o valor do localstorage 
 if (allValue != null) {
-  const arrayList = allValue.split(",") //transformando em array com o split
+  const arrayList = JSON.parse(allValue).length > 1 ? [...JSON.parse(allValue)]: [JSON.parse(allValue)]
 arrayList.map((item, index) => {
   const inputCheckbox = document.getElementById(index+1).addEventListener("change", (event) => {
     if (event.target.checked) {
@@ -125,7 +130,6 @@ arrayList.map((item, index) => {
 }
 }
 
-let nomeProd = ""
 
 gerarEventoInput()
 

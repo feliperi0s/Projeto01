@@ -7,56 +7,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Compras</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="icon.png" type="image/x-icon">
 </head>
 
 <body>
-    <div id="tudo">
-        <header id="cabecario">
-            <h1>
-                Lista de Compras
-            </h1>
-        </header>
+    <header id="cabecario">
+        <h1>
+            Lista de Compras
+        </h1>
+    </header>
 
-        <section id="adicionarIten">
-            <div>
-                <input type="text" name="" id="adicionar"
-                    placeholder="Insira o nome do produto que deseja adicionar na lista.">
-                <button onclick="adicionarNaLista()" id="botao"
-                    title="Botão para Adicionar Item digitado no campo texto">Adicionar Item</button>
+    <section id="adicionarIten">
+        <div>
+            <input type="text" id="adicionar" placeholder="Insira o nome do produto.">
+            <button onclick="adicionarNaLista()" id="botao"
+                title="Botão para Adicionar Item digitado no campo texto">Adicionar Item</button>
+        </div>
+    </section>
+
+    <section id="itensAdicionados">
+
+        <article id="itensVisiveis">
+            <div id="image"></div>
+
+            <ul id="listagem">
+
+            </ul>
+
+            <div id="soma">
             </div>
-        </section>
-
-        <section id="itensAdicionados">
-
-            <article id="itensVisiveis">
-                <div id="image"></div>
-
-                <div id="lista">
-                    <ul id="listagem">
-
-                    </ul>
-
-                </div>
-                <div id="soma">
-                    <p>Valor Total das Compras</p>
-                    <p>R$79,87</p>
-                </div>
-            </article>>
-            <div id="janela" class="modal">
-                <div class="modal-content">
-                    <p>Digite o valor do Produto</p>
-                    <span class="close">&times;</span>
-                    <input type="number" name="" id="" placeholder="valor produto ex R$7,54">
-                    <button>Adicionar Valor</button>
-                </div>
-
+        </article>>
+        <div id="janela" class="modal">
+            <div class="modal-content">
+                <p>Digite o valor do Produto</p>
+                <span class="close">&times;</span>
+                <input type="number" name="" id="valorProduto" placeholder="valor produto ex R$7,54">
+                <button onclick="exibirValores()" class="button">Adicionar Valor</button>
             </div>
-        </section>
 
-        <footer>
+        </div>
+    </section>
 
-        </footer>
-    </div>
+    <footer>
+
+    </footer>
+
     <script src="func.js"></script>
 </body>
 

@@ -4,13 +4,7 @@ body {
     background: linear-gradient(90deg, rgba(24,38,37,1) 0%, rgba(40,64,61,1) 35%, rgba(47,61,64,1) 100%);
 }
 
-#tudo {
-    width: 95%;
-    min-height:620px;
-    margin: auto;
-    background: rgb(24,38,37);
-    border-radius: 10px;
-}
+
 
 #cabecario {
     text-align: center;
@@ -36,7 +30,7 @@ body {
     height: 30px;
     border-radius: 5px;
     border: none;
-    
+    padding: 0px 8px;
 }
 
 #itensVisiveis {
@@ -46,17 +40,7 @@ body {
     min-height: 350px;
 }
 
- #lista {
-    border-radius: 10px;
-    background-color: #455559;
-    width : 40%;
-    margin-left: 19%;
-    text-align: start;
-    font-size: 1.5em;
-    color: white;
-    text-shadow:rgba(0, 0, 0, 0.596) 1px -1px, rgba(0, 0, 0, 0.596) -1px 1px, rgba(0, 0, 0, 0.596) 1px 1px, rgba(0, 0, 0, 0.596) -1px -1px;
-    
-}
+
 
 #soma {
     color: white;
@@ -131,9 +115,16 @@ body {
     border-bottom: 1px outset white;
 }
 #listagem {
+    border-radius: 10px;
+    background-color: #455559;
+    width : 40%;
+    margin-left: 19%;
+    text-align: start;
+    font-size: 1.5em;
+    color: white;
+    text-shadow:rgba(0, 0, 0, 0.596) 1px -1px, rgba(0, 0, 0, 0.596) -1px 1px, rgba(0, 0, 0, 0.596) 1px 1px, rgba(0, 0, 0, 0.596) -1px -1px;
     margin: 0;
     padding: 10px;
-    
 }
 .box {
    margin-top: 10px;

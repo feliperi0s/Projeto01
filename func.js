@@ -1,36 +1,45 @@
-let nomeProd = ""
+let nameProd = "" //usado para informar o valor digitado no input para pegar o gif na api
 /**
  * função para remover o item da lista HTML e do LocalStorage
  * @date 2022-04-12
  * @param {any} id
  * @returns {any}
  */
-function removerItemDaLista(id) {
+function removeItemFromList(id) {
 
-  const allValue = localStorage.getItem("itensDaLista") // retirando o valor do localstorage 
+  const allValue = localStorage.getItem("itensFromList") // pegando o valor do localstorage 
 
+/*
+arraylist caso o allvalue seja maior que 1 irá retorar os valores desestruturados dentro de um array se não 
+irá retornar o proprio valor dentro do array
+*/
   const arrayList = JSON.parse(allValue).length > 1 ? [...JSON.parse(allValue)] : [JSON.parse(allValue)]
 
-  const itemDeletado = document.getElementById(id);// id que vem do botão incluso no HTML
-  itemDeletado.remove(); //utizando o romove para remover o item do id
-  const itemfiltrado = arrayList.filter((value) => arrayList[id - 1].name != value.name) //filtro para pegar o valor do id e encontrar ele no localstorage
-  if (itemfiltrado.length === 0) {
-    localStorage.removeItem("itensDaLista")
-    atualizarLista()
-    soma()
+  const deletItem = document.getElementById(id);// id que vem do botão incluso no HTML
+  deletItem.remove(); //utizando o romove para remover o item do id
+  const filterItem = arrayList.filter((value) => arrayList[id - 1].name != value.name) //filtro para pegar o valor do id e encontrar ele no localstorage
+  if (filterItem.length === 0) {
+    localStorage.removeItem("itensFromList")
+    refreshList()
+    sum()
     return
-    //o filtro devolve o array no caso o localstorage sem o intem do id-button
+    //caso o filteritem.length for igual 0 ele remove o itensFromList do localstorage.
   }
-  if (itemfiltrado.length === 1) {
-    const [value] = itemfiltrado
-    localStorage.setItem("itensDaLista", JSON.stringify(value))
-    atualizarLista()
-    soma()
+  if (filterItem.length === 1) {
+    const [value] = filterItem
+    localStorage.setItem("itensFromList", JSON.stringify(value))
+    refreshList()
+    generateInputEvent()
+    sum()
     return
-  }
-  localStorage.setItem("itensDaLista", JSON.stringify(itemfiltrado)) //por ultimo devolvemos o array já filtrado sem o item excluido
-  atualizarLista()
-  soma()
+    /* caso o filteritem.length for igual 1 ele atualiza o localstorage com 
+  um objeto ao inves de atualizar com o array  */
+  } 
+
+  localStorage.setItem("itensFromList", JSON.stringify(filterItem)) //por ultimo devolvemos o array já filtrado sem o item excluido
+  refreshList()
+  generateInputEvent()
+  sum()
 }
 
 /**
@@ -38,99 +47,108 @@ function removerItemDaLista(id) {
  * @date 2022-04-12
  * @returns {any}
  */
-function atualizarLista() {
-  const allValue = localStorage.getItem("itensDaLista")
+function refreshList() {
+  const allValue = localStorage.getItem("itensFromList")
   if (allValue != null) { //pegamos os valores do localStorage se diferentes de null
+
+    /*
+    arraylist caso o allvalue seja maior que 1 irá retorar os valores desestruturados dentro de um array se não 
+    irá retornar o proprio valor dentro do array
+    */
     const arrayList = JSON.parse(allValue).length > 1 ? [...JSON.parse(allValue)] : [JSON.parse(allValue)]
 
-    document.getElementById("listagem").innerHTML = arrayList.map((item, index) => (
-      `<li id="${index + 1}" class="listaContent">
-      <input type="checkbox" id="${index + 1}" class="box" ${item.preco > 0 ? "checked" : ""}>
-      <span style="text-decoration: ${item.preco > 0 ? "line-through" : "none"}">${item.name}</span><span>R$ ${item.preco}</span>
-      <button onclick="removerItemDaLista(${index + 1})" class="remover"><img src="lixeira.png" alt="" id="lixeira"></button>
-      </li>` // Criando o item da lista , checkbox e o button para remover
+    document.getElementById("listing").innerHTML = arrayList.map((item, index) => (
+      `
+      <li id="${index + 1}" class="listContent">
+        <p style="text-decoration: ${item.price > 0 ? "line-through" : "none"}">
+          Nome: ${item.name}
+        </p>
+        <p>
+          Preço: R$ ${item.price}
+        </p>
+        <div>
+          <input type="checkbox" id="${index + 1}" class="box" ${item.price > 0 ? "checked" : ""}>
+          <button onclick="removeItemFromList(${index + 1})" class="remove">
+            <img src="dump.png" alt="Imagem de uma lixeira" id="dump">
+          </button>
+        </div>
+      </li>
+      ` // Criando o item da lista , checkbox e o button para remover e adicionando o preço
     )).toString().replaceAll(",", "") // toString para transformar em String e replaceAll para retirar a virgula e trocar pelo espaço .
   }
 }
-atualizarLista()
+
 
 /**
  * Função para adicionar o valor resgatado no input para a lista que será criada .
  * @date 2022-04-12
  * @returns {any}
  */
-function adicionarNaLista() {
-  let valorDoInput = document.getElementById("adicionar").value // valor do digitado no input
-  nomeProd = valorDoInput
+function addInList() {
+  let inputValue = document.getElementById("add").value // valor do digitado no input
+  if (inputValue.length > 150) { // se o valor tiver mais que 150 caracteres ele dispara a mensagem
+    alert("Item com tamanho muito grande,Favor ajustar!")
+    return
+  }
+  nameProd = inputValue //usado para informar o valor digitado no input para pegar o gif na api
   let itens = []; // array de itens vazio
-  let allValue = localStorage.getItem("itensDaLista") // ValorDoStorege é igual ao valor do LocalStage
-  if (valorDoInput.trim() == "") { // utilizando .trim() para limpar os espaços em branco do valorDoInput
-    alert("Digite o Item") // Alerta para digitar item valido
+  let allValue = localStorage.getItem("itensFromList") //pegando o valor do localstorage
+  if (inputValue.trim() == "") { // utilizando .trim() para limpar os espaços em branco do inputValue
+    alert("Digite o Item") // Alerta para quando digitar item invalido
     return
   }
   if (allValue != null) {
+    /*
+    arraylist caso o allvalue seja maior que 1 irá retorar os valores desestruturados dentro de um array se não 
+    irá retornar o proprio valor dentro do array
+    */
     const arrayList = JSON.parse(allValue).length > 1 ? [...JSON.parse(allValue)] : [JSON.parse(allValue)]
-    if (arrayList.some((item) => item.name == valorDoInput)) { //Se o valor do valorDoInput Já estiver no arrayStorege ele retorna item já está incluso utilizado o .includes para verificar
+
+    if (arrayList.some((item) => item.name == inputValue)) { //Se o valor do inputValue Já estiver no arrayList. Utilizamos o some para encontrar os valores iguais e disparar o alerta.
       alert("Item já incluso")
       return
     }
-    let value = [{ name: valorDoInput, preco: 0.00 }]
-    if (JSON.parse(localStorage.getItem("itensDaLista")).length > 1) {
-      value = [{ name: valorDoInput, preco: 0.00 }, ...JSON.parse(localStorage.getItem("itensDaLista"))]
+    let value = [{ name: inputValue, price: 0.00 }] // let para gerar objeto
+    if (JSON.parse(localStorage.getItem("itensFromList")).length > 1) { //se o valor for maior que 1 ele troca o resultado de value para array
+      value = [{ name: inputValue, price: 0.00 }, ...JSON.parse(localStorage.getItem("itensFromList"))]
     } else {
-      value.push(JSON.parse(localStorage.getItem("itensDaLista")))
+      value.push(JSON.parse(localStorage.getItem("itensFromList")))
 
     }
-    localStorage.setItem("itensDaLista", JSON.stringify(value))
-    document.getElementById("adicionar").value = "" // substitui o valor digitado no input quando apertado o botao
-    atualizarLista()
-    gerarEventoInput()
-    obterDadosGit()
+    localStorage.setItem("itensFromList", JSON.stringify(value))
+    document.getElementById("add").value = "" // substitui o valor digitado no input quando apertado o botao
+    refreshList()
+    generateInputEvent()
+    getDataFromGit()
     return
   } else {
-    itens.push(JSON.stringify({ name: valorDoInput, preco: 0.00 }))
-    localStorage.setItem("itensDaLista", JSON.stringify({ name: valorDoInput, preco: 0.00 }))
-    document.getElementById("adicionar").value = ""
-    atualizarLista()
-    gerarEventoInput()
+    itens.push(JSON.stringify({ name: inputValue, price: 0.00 }))
+    localStorage.setItem("itensFromList", JSON.stringify({ name: inputValue, price: 0.00 }))
+    document.getElementById("add").value = ""
+    refreshList()
+    generateInputEvent()
+    getDataFromGit()
   }
 }
 
-function gerarJanela() {
-  let janela = document.getElementById("janela");
-
-  let botao = document.getElementById("myBtn");
-
-  let fechar = document.getElementsByClassName("close")[0];
-
-  botao.onclick = () => {
-    janela.style.display = "block";
-  }
-
-  fechar.onclick = () => {
-    janela.style.display = "none";
-  }
-
-  window.onclick = (event) => {
-    if (event.target == janela) {
-      janela.style.display = "none";
-    }
-  }
-}
-
-function gerarEventoInput() {
-  const allValue = localStorage.getItem("itensDaLista") // retirando o valor do localstorage 
+/**
+ * Função para identificar eventos do input e ativar o modal ao clicar em algum dos inputs
+ * @date 2022-04-16
+ * @returns {any}
+ */
+function generateInputEvent() {
+  const allValue = localStorage.getItem("itensFromList") // retirando o valor do localstorage 
   if (allValue != null) {
     const arrayList = JSON.parse(allValue).length > 1 ? [...JSON.parse(allValue)] : [JSON.parse(allValue)]
-    arrayList.map((item, index) => {
+    arrayList.map((item, index) => { // map realizado para instanciar o evento a partir dos ids dos inputs
       document.getElementById(index + 1).addEventListener("change", (event) => {
-        if (event.target.checked) {
-          let janela = document.getElementById("janela");
-          janela.style.display = "block";
+        if (event.target.checked) { //se o checkbox de algum dos inputs for acionado irá retorar checked como true executando o if e gerando o modal
+          let window = document.getElementById("window");
+          window.style.display = "block";
           localStorage.setItem("item", JSON.stringify(item))
-          let fechar = document.getElementsByClassName("close")[0];
-          fechar.onclick = () => {
-            janela.style.display = "none";
+          let closed = document.getElementsByClassName("close")[0];
+          closed.onclick = () => { // dentro do modal existe um botao para fechar o modal ao clicado ele esconde o modal e troca o checkbox para false
+            window.style.display = "none";
             event.target.checked = false
           }
         }
@@ -138,64 +156,91 @@ function gerarEventoInput() {
     })
   }
 }
-gerarEventoInput()
-async function obterDadosGit() {
-  const resp = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=dpPu1kIHwa3fxoQiH9lzTfmUkMgEjtuS&q=${nomeProd}`)
-  const dados = await resp.json();
-  let numerogit = Math.floor(Math.random() * 50) + 1;
-  const src = dados.data[numerogit].images.fixed_width.url
-  document.getElementById("image").innerHTML = `<img src="${src}" alt="" style="width: 200px; height: 200px;"></img>`
+
+/**
+ * função para gerar o GIF animado
+ * @date 2022-04-16
+ * @returns {any}
+ */
+async function getDataFromGit() {
+  const resp = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=dpPu1kIHwa3fxoQiH9lzTfmUkMgEjtuS&q=${nameProd}`) // retirando a imagem de dentro da api e utilizando o nome digitado no input text
+  const data = await resp.json();
+  let numbergit = Math.floor(Math.random() * 50) + 1; // logica para gerar numero aleatorio para pegar um gif sempre diferente
+  const src = data.data[numbergit].images.fixed_width.url
+  document.getElementById("image").innerHTML = `<img src="${src}" alt="Gif animado" style="width: 70px; height: 70px;"></img>`
 }
 
-function exibirValores() {
-  const valorProduto = document.getElementById("valorProduto").value
-  const value = localStorage.getItem("item")
-  const objectValue = JSON.parse(value)
-  const allValue = localStorage.getItem("itensDaLista")
+/**
+ * função para enviar o valor digitado no input do modal e atualizar o valor do localStorage
+ * @date 2022-04-16
+ * @returns {any}
+ */
+function sendValue() {
+  const productValue = document.getElementById("productValue").value // valor do input do modal
+  const value = localStorage.getItem("item") // pegando o valor do localstorage item.
+  const objectValue = JSON.parse(value) //transformando o valor em objeto
+  const allValue = localStorage.getItem("itensFromList") //pegando o valor do localstorage itensFromList.
+  /*
+   arraylist caso o allvalue seja maior que 1 irá retorar os valores desestruturados dentro de um array se não 
+   irá retornar o proprio valor dentro do array
+   */
   const arrayList = JSON.parse(allValue).length > 1 ? [...JSON.parse(allValue)] : [JSON.parse(allValue)]
+
   const updateValue = arrayList.map((list) => {
-    if (list.name === objectValue.name) {
-      return { name: objectValue.name, preco: Number(valorProduto) }
+    if (list.name === objectValue.name) { // inserindo o valor do produto de acordo com o nome do produto informado no localstorage
+      return { name: objectValue.name, price: Number(productValue) }
     }
     return list
   }
   )
-  if (updateValue.length === 1) {
+  if (updateValue.length === 1) { // if feito para salvar o valor como objeto não como array
     const [value] = updateValue
-    localStorage.setItem("itensDaLista", JSON.stringify(value))
-    let janela = document.getElementById("janela");
-    janela.style.display = "none";
-    atualizarLista()
-    gerarEventoInput()
-    soma()
+    localStorage.setItem("itensFromList", JSON.stringify(value))
+    let window = document.getElementById("window");
+    window.style.display = "none"; // também fecha o modal
+    refreshList()
+    generateInputEvent()
+    sum()
     return
   }
-  localStorage.setItem("itensDaLista", JSON.stringify(updateValue))
-  let janela = document.getElementById("janela");
-  janela.style.display = "none";
-  atualizarLista()
-  gerarEventoInput()
-  soma()
+  localStorage.setItem("itensFromList", JSON.stringify(updateValue)) // salva como array
+  let window = document.getElementById("window");
+  window.style.display = "none"; // também fecha o modal
+  refreshList()
+  generateInputEvent()
+  sum()
 }
 
-function soma() {
+/**
+ * função para somar os valores e salvar a soma
+ * @date 2022-04-16
+ * @returns {any}
+ */
+function sum() {
   let result = 0
-  const allValue = localStorage.getItem("itensDaLista")
+  const allValue = localStorage.getItem("itensFromList")
   if (allValue != null) {
+      /*
+      arraylist caso o allvalue seja maior que 1 irá retorar os valores desestruturados dentro de um array se não 
+      irá retornar o proprio valor dentro do array
+      */
     const arrayList = JSON.parse(allValue).length > 1 ? [...JSON.parse(allValue)] : [JSON.parse(allValue)]
-    for (let index = 0; index < arrayList.length; index++) {
-      result += arrayList[index].preco
+    for (let index = 0; index < arrayList.length; index++) { // for para somar todos os valores dos itens
+      result += arrayList[index].price
     }
-    document.getElementById("soma").innerHTML = `
+    //adicionando os valores no html
+    document.getElementById("sum").innerHTML = `
     O valor total de compras é de
     R$ ${result.toFixed(2)}
     `
     return
   }
-  document.getElementById("soma").innerHTML = `
+  document.getElementById("sum").innerHTML = `
   O valor total de compras é de
-  R$ ${result}
+  R$ ${result.toFixed(2)}
   `
 }
 
-soma()
+refreshList()
+generateInputEvent()
+sum()

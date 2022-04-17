@@ -11,45 +11,45 @@
 </head>
 
 <body>
-    <header id="cabecario">
+    <header id="header">
         <h1>
             Lista de Compras
         </h1>
     </header>
 
-    <section id="adicionarIten">
-        <div>
-            <input type="text" id="adicionar" placeholder="Insira o nome do produto.">
-            <button onclick="adicionarNaLista()" id="botao"
-                title="Botão para Adicionar Item digitado no campo texto">Adicionar Item</button>
+    <section id="addIten">
+        <div style="width: 1000px;">
+            <input type="text" id="add" placeholder="Insira o nome do produto.">
+            <button onclick="addInList()" id="button"
+                title="Botão para Adicionar Item digitado no campo texto">
+                Adicionar Item
+            </button>
         </div>
+        <span id="image"></span>
     </section>
 
-    <section id="itensAdicionados">
-
-        <article id="itensVisiveis">
-            <div id="image"></div>
-
-            <ul id="listagem">
-
-            </ul>
-
-            <div id="soma">
-            </div>
-        </article>>
-        <div id="janela" class="modal">
+    <section>
+        <div id="sum">
+        </div>
+        <ul id="listing">
+        </ul>
+        <div id="window" class="modal">
             <div class="modal-content">
-                <p>Digite o valor do Produto</p>
-                <span class="close">&times;</span>
-                <input type="number" name="" id="valorProduto" placeholder="valor produto ex R$7,54">
-                <button onclick="exibirValores()" class="button">Adicionar Valor</button>
+                <p>
+                    Digite o valor do Produto
+                </p>
+                <span class="close">
+                    &times;
+                </span>
+                <input type="number" id="productValue" placeholder="valor produto ex: 7,54">
+                <button onclick="sendValue()" class="modalButton">
+                    Confirmar
+                </button>
             </div>
-
         </div>
     </section>
-
     <footer>
-
+        <p>Site criado por <a href="https://github.com/feliperi0s" target="_blank">Felipe Rios</a>.</p>
     </footer>
 
     <script src="func.js"></script>

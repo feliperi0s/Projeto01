@@ -24,7 +24,7 @@
 Faça o clone via github, e execute o arquivo HTML, pois não há nenhum uso de biblioteca externa para instalar.
 
 ## Exemplo da Aplicação
-<img src='listadecompras.png' alt='Documentação da API'>
+<img src='listadecompras.png' alt='Exemplo'>
 
 Todo feedback é bem-vindo. 
 
